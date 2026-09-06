@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nythxion Studios</title>
+
+<style>
+  :root {
+    --bg: #070912;
+    --bg-2: #0b1020;
+    --panel: rgba(17, 23, 42, 0.72);
+    --panel-solid: #11172a;
+    --panel-light: #171e34;
+    --text: #f4f7ff;
+    --muted: #98a2bb;
+    --line: rgba(255,255,255,.09);
+    --blue: #4da3ff;
+    --purple: #8b5cf6;
+    --cyan: #62d8ff;
+    --danger: #ff6b81;
+    --shadow: 0 20px 60px rgba(0,0,0,.35);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 15% 0%, rgba(77,163,255,.13), transparent 28rem),
+      radial-gradient(circle at 90% 12%, rgba(139,92,246,.14), transparent 30rem),
+      linear-gradient(180deg, #070912 0%, #090d18 45%, #070912 100%);
+    line-height: 1.7;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .35;
+    background-image:
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--line);
+    background: rgba(7,9,18,.76);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav {
+    max-width: 1180px;
+    margin: auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-decoration: none;
+  }
+
+  .brand span {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .nav-links a {
+    padding: 8px 12px;
+    border-radius: 9px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: .2s ease;
+  }
+
+  .nav-links a:hover {
+    color: white;
+    background: rgba(255,255,255,.06);
+  }
+  
+  .hero {
+    max-width: 1180px;
+    margin: auto;
+    padding: 115px 28px 100px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    border: 1px solid rgba(98,216,255,.2);
+    border-radius: 999px;
+    color: #b9eaff;
+    background: rgba(98,216,255,.06);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+  }
+
+  .hero h1 {
+    max-width: 950px;
+    margin: 24px 0 18px;
+    font-size: clamp(52px, 8vw, 92px);
+    line-height: .96;
+    letter-spacing: -.06em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      100deg,
+      #fff 10%,
+      #8fd8ff 48%,
+      #aa8cff 90%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    max-width: 690px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 19px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 17px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    transition: .2s ease;
+  }
+
+  .button-primary {
+    color: white;
+    border-color: rgba(77,163,255,.35);
+    background: linear-gradient(
+      135deg,
+      rgba(77,163,255,.22),
+      rgba(139,92,246,.22)
+    );
+    box-shadow: 0 0 30px rgba(77,163,255,.08);
+  }
+
+  .button-primary:hover {
+    transform: translateY(-2px);
+    border-color: rgba(98,216,255,.45);
+    box-shadow: 0 10px 35px rgba(77,163,255,.13);
+  }
+
+  .button-secondary {
+    color: var(--muted);
+    background: rgba(255,255,255,.035);
+  }
+
+  .button-secondary:hover {
+    color: white;
+    background: rgba(255,255,255,.06);
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: auto;
+    padding: 0 28px 110px;
+  }
+
+  .section-heading {
+    margin-bottom: 30px;
+  }
+
+  .section-heading .label {
+    color: var(--purple);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .section-heading h2 {
+    margin: 8px 0 7px;
+    font-size: 35px;
+    letter-spacing: -.04em;
+    line-height: 1.2;
+  }
+
+  .section-heading p {
+    max-width: 650px;
+    margin: 0;
+    color: var(--muted);
+  }
+  
+  .products {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 95px;
+  }
+
+  .product {
+    position: relative;
+    padding: 30px 32px;
+    min-height: 270px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background:
+      linear-gradient(
+        145deg,
+        rgba(17,23,42,.88),
+        rgba(10,14,27,.82)
+      );
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: .25s ease;
+  }
+
+  .product::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 28px;
+    bottom: 28px;
+    width: 2px;
+    background: linear-gradient(var(--blue), var(--purple));
+    opacity: .8;
+  }
+
+  .product::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -80px;
+    top: -80px;
+    border-radius: 50%;
+    background: rgba(77,163,255,.08);
+    filter: blur(25px);
+    pointer-events: none;
+  }
+
+  .product:hover {
+    transform: translateY(-4px);
+    border-color: rgba(98,216,255,.18);
+  }
+
+  .product-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.045);
+    font-size: 19px;
+  }
+
+  .product h3 {
+    margin: 0 0 9px;
+    font-size: 24px;
+    letter-spacing: -.03em;
+  }
+
+  .product p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 500px;
+  }
+
+  .product-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #9dd8ff;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .product-link:hover {
+    text-decoration: underline;
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 18px;
+    margin-bottom: 95px;
+  }
+
+  .panel {
+    padding: 30px 32px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background:
+      linear-gradient(
+        145deg,
+        rgba(17,23,42,.88),
+        rgba(10,14,27,.82)
+      );
+    box-shadow: var(--shadow);
+  }
+
+  .panel h3 {
+    margin: 0 0 14px;
+    font-size: 23px;
+    letter-spacing: -.025em;
+  }
+
+  .panel p {
+    margin: 0;
+    color: #c6cee0;
+  }
+
+  .values {
+    display: grid;
+    gap: 12px;
+  }
+
+  .value {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: rgba(255,255,255,.025);
+  }
+
+  .value strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 14px;
+  }
+
+  .value span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 95px;
+  }
+
+  .link-card {
+    display: block;
+    padding: 21px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: rgba(255,255,255,.025);
+    text-decoration: none;
+    transition: .2s ease;
+  }
+
+  .link-card:hover {
+    background: rgba(77,163,255,.06);
+    border-color: rgba(77,163,255,.2);
+    transform: translateY(-2px);
+  }
+
+  .link-card strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .link-card span {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .cta {
+    position: relative;
+    padding: 48px 40px;
+    border: 1px solid rgba(77,163,255,.18);
+    border-radius: 21px;
+    background:
+      radial-gradient(
+        circle at 0 0,
+        rgba(77,163,255,.13),
+        transparent 25rem
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(139,92,246,.12),
+        transparent 25rem
+      ),
+      rgba(17,23,42,.62);
+    overflow: hidden;
+  }
+
+  .cta h2 {
+    margin: 0 0 10px;
+    font-size: 38px;
+    letter-spacing: -.045em;
+  }
+
+  .cta p {
+    max-width: 600px;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .cta .button {
+    margin-top: 25px;
+  }
+
+  .footer {
+    border-top: 1px solid var(--line);
+    background: rgba(5,7,14,.75);
+  }
+
+  .footer-inner {
+    max-width: 1180px;
+    margin: auto;
+    padding: 30px 28px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: white;
+  }
+
+  .back-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(17,23,42,.86);
+    color: white;
+    text-decoration: none;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+  }
+
+  @media (max-width: 850px) {
+    .nav-links {
+      display: none;
+    }
+
+    .hero {
+      padding-top: 75px;
+    }
+
+    .products,
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .nav,
+    .hero,
+    .container,
+    .footer-inner {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .hero {
+      padding-top: 65px;
+      padding-bottom: 75px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+    }
+
+    .hero p {
+      font-size: 17px;
+    }
+
+    .product,
+    .panel {
+      padding: 25px 22px;
+      border-radius: 16px;
+    }
+
+    .product::before {
+      top: 22px;
+      bottom: 22px;
+    }
+
+    .links {
+      grid-template-columns: 1fr;
+    }
+
+    .cta {
+      padding: 34px 24px;
+    }
+
+    .cta h2 {
+      font-size: 31px;
+    }
+
+    .footer-inner {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+
+<body id="top">
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="#top">
+      Nythxion <span>Studios</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#links">Links</a>
+      <a href="/LegalCenter/">Richtlinien</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+
+  <div class="eyebrow">
+    <span class="dot"></span>
+    Nythxion Studios
+  </div>
+
+  <h1>
+    Building things<br>
+    <span class="gradient-text">worth using.</span>
+  </h1>
+
+  <p>
+    Nythxion Studios creates software, creative projects, open-source tools,
+    and services designed to be useful, accessible, and built with care.
+  </p>
+
+  <div class="hero-actions">
+    <a class="button button-primary" href="#projects">
+      Explore our projects
+    </a>
+
+    <a class="button button-secondary" href="/LegalCenter/">
+      Nythxion Studios Richtlinien
+    </a>
+  </div>
+
+</section>
+
+
+<main class="container">
+
+  <section id="projects">
+
+    <div class="section-heading">
+      <div class="label">What we build</div>
+      <h2>Our projects</h2>
+      <p>
+        Nythxion Studios brings together development, creative work,
+        and open-source projects under one studio.
+      </p>
+    </div>
+
+
+    <div class="products">
+
+      <article class="product">
+
+        <div class="product-icon">✦</div>
+
+        <h3>Nythxion AI</h3>
+
+        <p>
+          An all-in-one Discord bot combining AI, moderation, security,
+          leveling, tickets, economy, utilities, and more.
+        </p>
+
+        <a class="product-link" href="#">
+          Learn more →
+        </a>
+
+      </article>
+
+
+      <article class="product">
+
+        <div class="product-icon">◆</div>
+
+        <h3>Nythxion Designs</h3>
+
+        <p>
+          Creative design services for communities and projects,
+          including logos, graphics, branding, and other visual work.
+        </p>
+
+        <a class="product-link" href="#">
+          Explore Designs →
+        </a>
+
+      </article>
+
+
+      <article class="product">
+
+        <div class="product-icon">⌘</div>
+
+        <h3>Nythxion Open-Source</h3>
+
+        <p>
+          Useful tools and source code shared with the community,
+          allowing developers to learn, modify, and build upon our work.
+        </p>
+
+        <a class="product-link" href="#">
+          View projects →
+        </a>
+
+      </article>
+
+
+      <article class="product">
+
+        <div class="product-icon">◈</div>
+
+        <h3>Nythxion Development</h3>
+
+        <p>
+          The development side of Nythxion Studios, focused on building
+          software, tools, and technology for our projects.
+        </p>
+
+        <a class="product-link" href="#">
+          Learn more →
+        </a>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <section id="about">
+
+    <div class="section-heading">
+      <div class="label">The studio</div>
+      <h2>Built around projects.</h2>
+      <p>
+        Nythxion Studios is a collection of projects rather than just one product.
+      </p>
+    </div>
+
+
+    <div class="about">
+
+      <div class="panel">
+
+        <h3>What is Nythxion Studios?</h3>
+
+        <p>
+          Nythxion Studios is an independent project studio focused on
+          development, creative work, and community-driven projects.
+          We build our own software while also creating tools, designs,
+          and resources that can be useful to other communities.
+        </p>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="values">
+
+          <div class="value">
+            <strong>Useful</strong>
+            <span>We build things with an actual purpose.</span>
+          </div>
+
+          <div class="value">
+            <strong>Accessible</strong>
+            <span>Projects should be understandable and easy to use.</span>
+          </div>
+
+          <div class="value">
+            <strong>Community-driven</strong>
+            <span>We build alongside the communities using our projects.</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="links">
+
+    <div class="section-heading">
+      <div class="label">Explore</div>
+      <h2>Important links</h2>
+      <p>
+        Everything you may need to find Nythxion Studios and its projects.
+      </p>
+    </div>
+
+
+    <div class="links">
+
+      <a class="link-card" href="#">
+        <strong>Nythxion AI</strong>
+        <span>Our Discord bot</span>
+      </a>
+
+      <a class="link-card" href="#">
+        <strong>Discord</strong>
+        <span>Join our community</span>
+      </a>
+
+      <a class="link-card" href="#">
+        <strong>GitHub</strong>
+        <span>Our open-source projects</span>
+      </a>
+
+      <a class="link-card" href="#">
+        <strong>Nythxion Designs</strong>
+        <span>Creative projects &amp; design</span>
+      </a>
+
+      <a class="link-card" href="/LegalCenter/">
+        <strong>Nythxion Studios Terms/strong>
+        <span>Terms, privacy &amp; legal information</span>
+      </a>
+
+      <a class="link-card" href="mailto:nythxionai@gmx.net">
+        <strong>Contact</strong>
+        <span>Get in touch with us</span>
+      </a>
+
+    </div>
+
+  </section>
+
+  <section class="cta">
+
+    <h2>Let's build something.</h2>
+
+    <p>
+      Whether you're looking for our projects, want to collaborate,
+      or simply want to see what we're working on, you're welcome here.
+    </p>
+
+    <a class="button button-primary" href="mailto:nythxionai@gmx.net">
+      Get in touch
+    </a>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  <div class="footer-inner">
+
+    <div>
+      © 2026 Nythxion Studios ·
+      Nythxion Designs ·
+      Nythxion Development ·
+      Nythxion AI ·
+      Nythxion Open-Source
+    </div>
+
+    <div>
+      <a href="/LegalCenter/">Nythxion Studios Terms</a>
+    </div>
+
+  </div>
+
+</footer>
+
+
+<a class="back-top" href="#top" aria-label="Back to top">↑</a>
+
+</body>
+</html>
