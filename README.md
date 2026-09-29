@@ -1,6 +1,6 @@
-# Nythxion Studios - Legal Documents
+# Nythxion Studios - Page
 
-This repository contains official legal documents and policies for **Nythxion Studios**, including our Homepage.
+This repository contains official pages and policies for **Nythxion Studios**, including our Homepage.
 
 ## © Copyright
 
