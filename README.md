@@ -9,7 +9,7 @@
                O F F I C I A L  W E B S I T E
 ```
 
-# Nythxion Studios - Homepage
+# Homepage
 
 This repository contains the official **Nythxion Studios Homepage** and related website content.
 
